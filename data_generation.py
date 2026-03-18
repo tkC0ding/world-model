@@ -3,14 +3,24 @@ import numpy as np
 import cv2
 import os
 import json
+import argparse
 
-DATA_DIR = "data"
-NUM_EPISODES = 60
-NUM_TIME_STEPS = 1000
+parser = argparse.ArgumentParser(description="Data Generation for CarRacing-v3")
+parser.add_argument("--num_episodes", type=int, default=60, help="Number of episodes to generate")
+parser.add_argument("--num_time_steps", type=int, default=1000, help="Number of time steps per episode")
+parser.add_argument("--data_dir", type=str, default="data", help="Directory to save the generated data")
+parser.add_argument("--gym_env", type=str, default="CarRacing-v3", help="Gym environment to use")
+
+args = parser.parse_args()
+
+GYM_ENV = args.gym_env
+DATA_DIR = args.data_dir
+NUM_EPISODES = args.num_episodes
+NUM_TIME_STEPS = args.num_time_steps
 
 os.mkdir(DATA_DIR)
 
-env = gym.make("CarRacing-v3", render_mode="rgb_array", max_episode_steps=NUM_TIME_STEPS)
+env = gym.make(GYM_ENV, render_mode="rgb_array", max_episode_steps=NUM_TIME_STEPS)
 
 obs, _ = env.reset()
 
