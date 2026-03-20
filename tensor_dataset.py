@@ -3,8 +3,15 @@ import os
 import json
 import cv2
 from torchvision import transforms
+import numpy as np
+import argparse
 
-DATA_DIR = "data"
+parser = argparse.ArgumentParser(description="CarRacing Dataset")
+parser.add_argument("--data_dir", type=str, default="data", help="Directory where the generated data is stored")
+
+args = parser.parse_args()
+
+DATA_DIR = args.data_dir
 
 class CarRacingDataset(Dataset):
     def __init__(self, data_dir=DATA_DIR, transforms=None):
@@ -28,8 +35,9 @@ class CarRacingDataset(Dataset):
                 if j == goal:
                     img = cv2.imread(data[idx % 1000]["image"])
                     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                    img = img.astype(np.float32) / 255.0
+                    img = np.transpose(img, (2, 0, 1))
                     action = data[idx % 1000]["action"]
                     if self.transforms:
                         img = self.transforms(img)
                     return img, action
-
