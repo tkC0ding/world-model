@@ -36,6 +36,7 @@ for i in range(NUM_EPISODES):
         done = terminated or truncated
 
         frame = obs.copy()
+        frame = cv2.resize(frame, (64, 64))
 
         IMG_PATH = os.path.join(DATA_DIR, f"episode_{i}", f"frame_{j}.jpg")
 

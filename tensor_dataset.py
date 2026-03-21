@@ -4,17 +4,9 @@ import json
 import cv2
 from torchvision import transforms
 import numpy as np
-import argparse
-
-parser = argparse.ArgumentParser(description="CarRacing Dataset")
-parser.add_argument("--data_dir", type=str, default="data", help="Directory where the generated data is stored")
-
-args = parser.parse_args()
-
-DATA_DIR = args.data_dir
 
 class CarRacingDataset(Dataset):
-    def __init__(self, data_dir=DATA_DIR, transforms=None):
+    def __init__(self, data_dir="", transforms=None):
         self.data_dir = data_dir
         self.transforms = transforms
         self.json_data_files = [os.path.join(data_dir, i, j) for i in os.listdir(data_dir) for j in os.listdir(os.path.join(data_dir, i)) if j.endswith(".json")]
