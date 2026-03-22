@@ -1,4 +1,5 @@
 from torch.nn import Module
+from torch import nn
 import torch
 
 class VAE(Module):
@@ -33,3 +34,17 @@ class VAE(Module):
             torch.nn.ConvTranspose2d(32, 3, kernel_size=4, stride=2, padding=1),
             torch.nn.Sigmoid()
         )
+
+        nn.ModuleList(self.encoder, self.flatten, self.fc_mu, self.fc_logvar, self.decoder)
+    
+    def encode(self, x):
+        h = self.encoder(x)
+        h = self.flatten(h)
+        mu = self.fc_mu(h)
+        logvar = self.fc_logvar(h)
+        return mu, logvar
+    
+    def reparameterize(self, mu, logvar):
+        std = torch.exp(0.5 * logvar)
+        eps = torch.randn_like(std)
+        return mu + eps * std
