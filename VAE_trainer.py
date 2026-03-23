@@ -1,6 +1,6 @@
 import torch
 from VAE import VAE, VAELoss
-from utils import train_test_split
+from utils import train_test_split, train_VAE
 from torch.optim import Adam
 from tensor_dataset import CarRacingDataset
 import argparse
@@ -18,3 +18,10 @@ args = parser.parse_args()
 dataset = CarRacingDataset(data_dir=args.data_dir)
 
 train_loader, validation_loader, test_loader = train_test_split(dataset, args.train_split, 0.1, args.batch_size)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+model = VAE().to(device)
+optimizer = Adam(model.parameters(), lr=args.learning_rate)
+
+train_VAE(model, train_loader, optimizer, device, VAELoss, args.num_epochs)
