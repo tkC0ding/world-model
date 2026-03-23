@@ -1,7 +1,7 @@
 import torch
 from VAE import VAE, VAELoss
+from utils import train_test_split
 from torch.optim import Adam
-from torch.utils.data import DataLoader, Subset
 from tensor_dataset import CarRacingDataset
 import argparse
 import os
@@ -17,20 +17,4 @@ args = parser.parse_args()
 
 dataset = CarRacingDataset(data_dir=args.data_dir)
 
-indices = torch.randperm(len(dataset))
-
-train_size = int((args.train_split-0.1) * len(dataset))
-validation_size = int(0.1 * len(dataset))
-
-train_indices = indices[:train_size]
-validation_indices = indices[train_size:train_size+validation_size]
-test_indices = indices[train_size+validation_size:]
-
-train_dataset = Subset(dataset, train_indices)
-validation_dataset = Subset(dataset, validation_indices)
-test_dataset = Subset(dataset, test_indices)
-
-train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
-validation_loader = DataLoader(validation_dataset, batch_size=args.batch_size, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
-
+train_loader, validation_loader, test_loader = train_test_split(dataset, args.train_split, 0.1, args.batch_size)
