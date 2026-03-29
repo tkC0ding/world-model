@@ -8,7 +8,7 @@ import argparse
 parser = argparse.ArgumentParser(description="Data Generation for CarRacing-v3")
 parser.add_argument("--num_episodes", type=int, default=60, help="Number of episodes to generate")
 parser.add_argument("--num_time_steps", type=int, default=1000, help="Number of time steps per episode")
-parser.add_argument("--data_dir", type=str, default="data", help="Directory to save the generated data")
+parser.add_argument("--data_dir", type=str, default="../data", help="Directory to save the generated data")
 parser.add_argument("--gym_env", type=str, default="CarRacing-v3", help="Gym environment to use")
 
 args = parser.parse_args()

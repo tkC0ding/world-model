@@ -71,5 +71,5 @@ def train_VAE(model, train_loader, val_loader, optimizer, device, loss_fn, epoch
             'optimizer_state_dict': optimizer.state_dict(),
             'loss': loss,
         }
-        torch.save(checkpoint, save_dir)
-        print(f"Model saved to {save_dir}\n\n")
+        torch.save(checkpoint, f"{save_dir}/checkpoint_{epoch+1}.pth")
+        print(f"Model saved to {save_dir}/checkpoint_{epoch+1}.pth\n\n")
