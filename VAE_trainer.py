@@ -24,4 +24,4 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = VAE().to(device)
 optimizer = Adam(model.parameters(), lr=args.learning_rate)
 
-train_VAE(model, train_loader, optimizer, device, VAELoss, args.num_epochs)
+train_VAE(model, train_loader, validation_loader, optimizer, device, VAELoss, args.num_epochs, args.model_save_path)
