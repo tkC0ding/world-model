@@ -4,6 +4,7 @@ import json
 import cv2
 from torchvision import transforms
 import numpy as np
+import pickle
 
 class CarRacingDataset(Dataset):
     def __init__(self, data_dir="", transforms=None):
@@ -33,3 +34,20 @@ class CarRacingDataset(Dataset):
                     if self.transforms:
                         img = self.transforms(img)
                     return img, action
+
+class RNN_Dataset(Dataset):
+    def __init__(self, data_path):
+        with open(data_path, 'rb') as f:
+            self.data = pickle.load(f)
+        self.x = []
+        self.y = []
+        for episode in self.data:
+            for i in range(0, len(episode)-16, 16):
+                self.x.append(episode[i:i+32])
+                self.y.append([i[0] for i in episode[i+1:i+33]])
+    
+    def __len__(self):
+        return len(self.x)
+    
+    def __getitem__(self, idx):
+        return self.x[idx], self.y[idx]
