@@ -41,7 +41,7 @@ class RNN_Dataset(Dataset):
         self.x = []
         self.y = []
         for episode in self.data:
-            for i in range(0, len(episode)-16, 16):
+            for i in range(0, len(episode)-17, 16):
                 self.x.append(episode[i:i+32])
                 self.y.append([i[0] for i in episode[i+1:i+33]])
     

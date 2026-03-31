@@ -43,7 +43,7 @@ for episode in episodes:
             with torch.no_grad():
                 mu, logvar = VAE_model.encode(img)
                 z = VAE_model.reparameterize(mu, logvar)
-                if i >= 991:
+                if i >= 993:
                     continue
                 temp.append((z.squeeze(0), torch.tensor(item['action'], dtype=torch.float32)))
     training_data.append(temp)
