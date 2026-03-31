@@ -2,7 +2,6 @@ from torch.utils.data import Dataset
 import os
 import json
 import cv2
-from torchvision import transforms
 import numpy as np
 import pickle
 
