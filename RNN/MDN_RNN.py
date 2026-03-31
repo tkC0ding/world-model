@@ -25,7 +25,7 @@ class MDNRNN(nn.Module):
         
         out, (hidden, cell_state) = self.rnn(x, (hidden, cell_state))
 
-        mdn_out = self.mdn_head(out)
+        mdn_out = self.mdn_head(out[:, -1, :])
 
         return mdn_out, hidden, cell_state
 
