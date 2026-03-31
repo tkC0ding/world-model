@@ -47,6 +47,7 @@ for episode in episodes:
                     continue
                 temp.append((z.squeeze(0), torch.tensor(item['action'], dtype=torch.float32)))
     training_data.append(temp)
+    print(f"\nEpisode {episode} processed.\n")
 
 with open(f'{args.data_dir}/RNN_training_data.pkl', 'wb') as f:
     pickle.dump(training_data, f)
